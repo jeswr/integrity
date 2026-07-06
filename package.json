@@ -1,7 +1,7 @@
 {
   "name": "@jeswr/integrity",
   "version": "0.1.0",
-  "description": "The integrity abstraction seam for the @jeswr Solid suite: 'certainty that data meets a stated integrity requirement', with Verifiable Credentials demoted from 'the layer' to 'one mechanism' (as HTTP is one transport). A ZERO-DEPENDENCY property-profile core mirroring the sparq security/integrity type ontologies (sec-prop / sig-impl / sec-req) — 6 base + 8 advanced integrity properties, {yes|partial|no} verdicts, named IL0-IL4 profiles (NOT an ordinal enum), fail-closed satisfies(), and a deny-by-default verifyIntegrity() over an injectable provider registry (issuer-agnostic-verifier shaped). Ships one built-in provider behind ./rdfc: a trusted-reference RDFC-1.0 content-hash verifier (IL2), poison-graph hardened. NEVER imports @jeswr/solid-vc — the dependency direction is one-way. IRIs are w3id.org/jeswr placeholders pending the zkp-sparql public-flip (see ALIGNMENT.md). Experimental, AI-agent-generated.",
+  "description": "The integrity abstraction seam for the @jeswr Solid suite: 'certainty that data meets a stated integrity requirement', with Verifiable Credentials demoted from 'the layer' to 'one mechanism' (as HTTP is one transport). A ZERO-DEPENDENCY property-profile core mirroring the sparq security/integrity type ontologies (sec-prop / sig-impl / sec-req) — 6 base + 8 advanced integrity properties, {yes|partial|no} verdicts, named IL0-IL4 profiles (NOT an ordinal enum), fail-closed satisfies(), and a deny-by-default verifyIntegrity() over an injectable provider registry (issuer-agnostic-verifier shaped). Ships one built-in provider behind ./rdfc: a trusted-reference RDFC-1.0 content-hash verifier (IL2), poison-graph hardened. NEVER imports @jeswr/solid-vc — the dependency direction is one-way. IRIs are minted under jeswr.org/ns/integrity, term-level alignment to the private zkp-sparql IRIs pending its public-flip (see ALIGNMENT.md). Experimental, AI-agent-generated.",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -19,6 +19,7 @@
     "dist",
     "README.md",
     "ALIGNMENT.md",
+    "integrity.ttl",
     "LICENSE"
   ],
   "scripts": {

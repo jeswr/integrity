@@ -56,7 +56,7 @@ export const IL4_AUTHOR_BOUND_FRESH: "IL4-author-bound-fresh";
 export const INTEGRITY_ADDONS: Readonly<Record<IntegrityAddonName, ReadonlyMap<IntegrityPropertyIri, Verdict>>>;
 
 // @public
-export const INTEGRITY_NS: "https://w3id.org/jeswr/integrity#";
+export const INTEGRITY_NS: "https://jeswr.org/ns/integrity#";
 
 // @public
 export const INTEGRITY_PROFILES: Readonly<Record<IntegrityProfileName, ReadonlyMap<IntegrityPropertyIri, Verdict>>>;

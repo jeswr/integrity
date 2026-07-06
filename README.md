@@ -147,9 +147,10 @@ directly" is structurally true.
 
 ## Status & follow-ons
 
-Prototype; IRIs are `w3id.org/jeswr` placeholders pending the `zkp-sparql` public-flip (see
-[`ALIGNMENT.md`](./ALIGNMENT.md) and sparq-org/sparq#1682). Downstream consumers, each a separate
-piece of work that depends on this package:
+Prototype; IRIs are minted under `https://jeswr.org/ns/integrity#` (served via the portfolio `/ns`
+redirect layer) and the term-level `owl:equivalent*` alignment to the private `zkp-sparql` IRIs is
+pending its public-flip (see [`ALIGNMENT.md`](./ALIGNMENT.md) and sparq-org/sparq#1682). Downstream
+consumers, each a separate piece of work that depends on this package:
 
 - **`@jeswr/solid-vc` `./integrity` adapter** — `solidVcIntegrityVerifier(options): IntegrityVerifier`
   wrapping `verifyCredential`, reporting achieved properties per cryptosuite.

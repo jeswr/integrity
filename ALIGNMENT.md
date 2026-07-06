@@ -8,10 +8,15 @@ are in a **PRIVATE, do-not-publish repo**. Their README is explicit:
 > **PRIVATE / UNPUBLISHED** … IRIs minted under `https://w3id.org/zkp-sparql/…` are placeholders
 > pending a public-flip decision … **Do not cite, redistribute, or publish** these vocabularies.
 
-So this package **mints its own placeholder IRIs** under the suite house-rule namespace
-`https://w3id.org/jeswr/integrity#` and mirrors the STRUCTURE, deferring term-level
-`owl:equivalentClass` / `owl:equivalentProperty` alignment until the `zkp-sparql` public-flip
-(**tracked at sparq-org/sparq#1682**). Nothing here cites or redistributes a `zkp-sparql` IRI.
+So this package **mints its own IRIs** under the suite house-rule namespace
+`https://jeswr.org/ns/integrity#` (jeswr namespaces are minted under `jeswr.org` and served via
+the portfolio `/ns` redirect layer — never `w3id.org`) and mirrors the STRUCTURE, deferring
+term-level `owl:equivalentClass` / `owl:equivalentProperty` alignment until the `zkp-sparql`
+public-flip (**tracked at sparq-org/sparq#1682**). Nothing here cites or redistributes a
+`zkp-sparql` IRI. A minimal vocabulary document resolves the namespace to real Turtle —
+[`integrity.ttl`](./integrity.ttl) — describing the 14 property IRIs plus the IL0–IL4 profiles
+and add-on flags; each term will carry an `owl:equivalentProperty`/`equivalentClass` to the
+matching sparq `sec-prop:`/`sig-impl:` term once sparq-org/sparq#1682 makes them public.
 
 Once the flip lands, the intended alignment is an `owl:equivalent*` axiom per row below (the
 advanced-tier rows are name-for-name), plus reconciliation of the six proposed **base** properties
@@ -41,7 +46,7 @@ The base integrity properties every requirement in this suite actually gates on 
 but unminted** in `sec-prop:` (the eight advanced properties are the privacy/PQ/leakage tier above
 them). This package proposes adding these six as instances of the existing
 `sec-prop:SecurityProperty` class (zero new classes). Until then they live only under
-`https://w3id.org/jeswr/integrity#` and are marked `PLACEHOLDER-pending-reconciliation` in code.
+`https://jeswr.org/ns/integrity#` and are marked `PLACEHOLDER-pending-reconciliation` in code.
 
 | `@jeswr/integrity#` (this package) | Meaning | Status |
 |---|---|---|

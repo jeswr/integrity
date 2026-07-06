@@ -29,7 +29,7 @@ describe("vocab: verdict rank (total order, fail-closed)", () => {
 
 describe("vocab: property IRIs", () => {
   it("mints all properties under the @jeswr placeholder namespace (not zkp-sparql)", () => {
-    expect(INTEGRITY_NS).toBe("https://w3id.org/jeswr/integrity#");
+    expect(INTEGRITY_NS).toBe("https://jeswr.org/ns/integrity#");
     for (const p of ALL_PROPERTIES) {
       expect(p.startsWith(INTEGRITY_NS)).toBe(true);
       expect(p).not.toContain("zkp-sparql");

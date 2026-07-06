@@ -6,13 +6,13 @@
  *   - a VERDICT is one of {yes, partial, no}                               (sig-impl pattern)
  *   - a REQUIREMENT pulls on a set of properties, each at a minimum verdict (sec-req pattern)
  *
- * IRIs here are minted under the @jeswr placeholder namespace
- * `https://w3id.org/jeswr/integrity#` (suite house rule: new vocab terms live under
- * `https://w3id.org/jeswr/…`). They are NOT the private `https://w3id.org/zkp-sparql/…`
- * IRIs — that repo is PRIVATE / do-not-publish, so we mirror the STRUCTURE and defer
- * term-level `owl:equivalent*` alignment until its public-flip (sparq-org/sparq#1682).
- * Each advanced-tier constant below cites the sparq `sec-prop:` term it aligns to; the
- * full pending alignment table is ALIGNMENT.md.
+ * IRIs here are minted under the @jeswr namespace `https://jeswr.org/ns/integrity#`
+ * (suite house rule: mint jeswr namespaces under `jeswr.org`, served via the portfolio
+ * `/ns` redirect layer — NEVER `w3id.org`). They are NOT the private
+ * `https://w3id.org/zkp-sparql/…` IRIs — that repo is PRIVATE / do-not-publish, so we
+ * mirror the STRUCTURE and defer term-level `owl:equivalent*` alignment until its
+ * public-flip (sparq-org/sparq#1682). Each advanced-tier constant below cites the sparq
+ * `sec-prop:` term it aligns to; the full pending alignment table is ALIGNMENT.md.
  */
 /**
  * A verdict on whether a mechanism attains an integrity property.
@@ -37,8 +37,8 @@ export type IntegrityPropertyIri = string;
 export declare function rank(v: Verdict | undefined): 0 | 1 | 2;
 /** True iff `v` is one of the three recognised verdict strings. */
 export declare function isVerdict(v: unknown): v is Verdict;
-/** The @jeswr placeholder vocabulary namespace for integrity properties. */
-export declare const INTEGRITY_NS: "https://w3id.org/jeswr/integrity#";
+/** The @jeswr vocabulary namespace for integrity properties. */
+export declare const INTEGRITY_NS: "https://jeswr.org/ns/integrity#";
 /**
  * Integrity/origin assured only for the retrieval channel (TLS, DPoP-bound); does NOT survive
  * copying. PROPOSED base property — not yet in sparq `sec-prop:`.
