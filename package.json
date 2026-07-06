@@ -1,0 +1,81 @@
+{
+  "name": "@jeswr/integrity",
+  "version": "0.1.0",
+  "description": "The integrity abstraction seam for the @jeswr Solid suite: 'certainty that data meets a stated integrity requirement', with Verifiable Credentials demoted from 'the layer' to 'one mechanism' (as HTTP is one transport). A ZERO-DEPENDENCY property-profile core mirroring the sparq security/integrity type ontologies (sec-prop / sig-impl / sec-req) — 6 base + 8 advanced integrity properties, {yes|partial|no} verdicts, named IL0-IL4 profiles (NOT an ordinal enum), fail-closed satisfies(), and a deny-by-default verifyIntegrity() over an injectable provider registry (issuer-agnostic-verifier shaped). Ships one built-in provider behind ./rdfc: a trusted-reference RDFC-1.0 content-hash verifier (IL2), poison-graph hardened. NEVER imports @jeswr/solid-vc — the dependency direction is one-way. IRIs are w3id.org/jeswr placeholders pending the zkp-sparql public-flip (see ALIGNMENT.md). Experimental, AI-agent-generated.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./rdfc": {
+      "types": "./dist/rdfc.d.ts",
+      "import": "./dist/rdfc.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "ALIGNMENT.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "node scripts/build-dist.mjs",
+    "check:dist": "node scripts/check-dist-fresh.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "biome check src test scripts",
+    "lint:fix": "biome check --write src test scripts",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "api": "api-extractor run --local && api-extractor run --local --config api-extractor.rdfc.json",
+    "check:api": "api-extractor run && api-extractor run --config api-extractor.rdfc.json",
+    "publint": "publint --strict",
+    "attw": "attw --pack . --profile node16 --ignore-rules cjs-resolves-to-esm",
+    "gate": "npm run lint && npm run typecheck && npm run test && npm run build && npm run check:dist && npm run check:api && npm run publint && npm run attw",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "integrity",
+    "data-integrity",
+    "verifiable-credentials",
+    "rdf-canonicalization",
+    "rdfc",
+    "content-addressing",
+    "solid",
+    "security",
+    "fail-closed"
+  ],
+  "author": "Jesse Wright <jwrightwho@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeswr/integrity.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jeswr/integrity/issues"
+  },
+  "homepage": "https://github.com/jeswr/integrity#readme",
+  "dependencies": {
+    "n3": "2.1.1",
+    "rdf-canonize": "5.0.0"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.0",
+    "@biomejs/biome": "^2.0.0",
+    "@microsoft/api-extractor": "^7.47.0",
+    "@types/n3": "^1.26.0",
+    "@types/node": "^22.0.0",
+    "@vitest/coverage-v8": "3.2.6",
+    "publint": "^0.3.0",
+    "typescript": "^5.6.0",
+    "vitest": "3.2.6"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

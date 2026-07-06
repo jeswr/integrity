@@ -1,0 +1,26 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jeswr/full-solid-ecosystem/main/tracking/schema/suite.schema.json",
+  "id": "integrity",
+  "kind": "sdk",
+  "name": "Integrity abstraction seam (property-profile, fail-closed, deny-by-default)",
+  "repo": "https://github.com/jeswr/integrity",
+  "category": "infrastructure",
+  "maturity": "prototype",
+  "visibility": "public",
+  "securityCritical": true,
+  "stack": {
+    "lang": "TypeScript (ESM, NodeNext)",
+    "core": "ZERO runtime dependency (browser-safe root export)",
+    "rdfc-provider": "rdf-canonize 5.0.0 (RDFC-1.0) + n3 2.1.1 (parse) + node:crypto — ./rdfc subexport only",
+    "model": "sparq sec-prop / sig-impl / sec-req structure; @jeswr placeholder IRIs (ALIGNMENT.md)",
+    "test": "vitest 3.2.6",
+    "lint": "@biomejs/biome ^2.x",
+    "build": "tsc (committed dist/, check:dist gate); rdf-canonize + n3 stay external npm deps",
+    "api-report": "@microsoft/api-extractor (etc/integrity.api.md + etc/integrity.rdfc.api.md)",
+    "publish-checks": "publint --strict + @arethetypeswrong/cli",
+    "node": ">=22"
+  },
+  "dependsOn": [],
+  "federation": null,
+  "notes": "The integrity abstraction from the integrity-first design (§A/§C.1, maintainer-signed-off 2026-07-06). 'Integrity' is the top-level concept — certainty that data meets a STATED integrity requirement — with Verifiable Credentials demoted from 'the layer' to one mechanism (as HTTP is one transport). Property-PROFILE model (NOT an ordinal enum): 6 base + 8 advanced integrity properties, {yes|partial|no} verdicts mirroring sparq sig-impl assertions, named IL0-IL4 profiles + orthogonal add-on flags. Fail-closed satisfies() (absent property => no) and deny-by-default verifyIntegrity() over an injectable provider registry (issuer-agnostic-verifier shaped; a throwing/hostile provider can never yield acceptance). Ships the §A.4 mechanism->property assertion table as data, and ONE built-in provider behind ./rdfc: a trusted-reference RDFC-1.0 content-hash verifier (IL2) hardened against poison-graph DoS (byte/quad/blank-node caps + rdf-canonize maxWorkFactor + timeout). LOAD-BEARING RULE: @jeswr/integrity NEVER imports @jeswr/solid-vc — the solid-vc ./integrity provider depends on THIS package, not the reverse. Consumed by the personal-agent mandate verifier, solid-vc, codegen signed-manifest, and concept-hash designs. Opus-authored (security-critical)."
+}
