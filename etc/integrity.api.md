@@ -117,6 +117,9 @@ export interface IntegrityVerifier {
 export function isAttestation(result: IntegrityResult): result is IntegrityAttestation;
 
 // @public
+export function isVerdict(v: unknown): v is Verdict;
+
+// @public
 export function maxVerdict(a: Verdict, b: Verdict): Verdict;
 
 // @public
@@ -215,7 +218,12 @@ export const VALIDITY_PERIOD_LEAKAGE: IntegrityPropertyIri;
 export type Verdict = "yes" | "partial" | "no";
 
 // @public
-export function verifyIntegrity(input: IntegrityInput, requirement: IntegrityRequirement, registry: Iterable<IntegrityVerifier>): Promise<IntegrityAttestation | undefined>;
+export function verifyIntegrity(input: IntegrityInput, requirement: IntegrityRequirement, registry: Iterable<IntegrityVerifier>, options?: VerifyIntegrityOptions): Promise<IntegrityAttestation | undefined>;
+
+// @public
+export interface VerifyIntegrityOptions {
+    readonly providerTimeoutMs?: number;
+}
 
 // (No @packageDocumentation comment for this package)
 

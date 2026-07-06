@@ -139,6 +139,64 @@ describe("verifyIntegrity: fail-closed on hostile/buggy providers", () => {
     ).toBeUndefined();
   });
 
+  it("a NEVER-RESOLVING provider is skipped when providerTimeoutMs is set; later provider used", async () => {
+    // roborev regression: an unbounded verify() must not stall the dispatch.
+    const stalled: IntegrityVerifier = {
+      mechanism: "stalled",
+      canAttempt: () => true,
+      verify: () => new Promise<IntegrityResult>(() => {}), // never settles
+    };
+    const out = await verifyIntegrity(
+      anyInput,
+      req({ [CONTENT_BINDING]: "yes" }),
+      [stalled, attestingProvider("ok", { [CONTENT_BINDING]: "yes" })],
+      { providerTimeoutMs: 50 },
+    );
+    expect(out?.mechanism).toBe("ok");
+  });
+
+  it("a lone never-resolving provider yields undefined (deny) under a timeout", async () => {
+    const stalled: IntegrityVerifier = {
+      mechanism: "stalled",
+      canAttempt: () => true,
+      verify: () => new Promise<IntegrityResult>(() => {}),
+    };
+    expect(
+      await verifyIntegrity(anyInput, req({ [CONTENT_BINDING]: "yes" }), [stalled], {
+        providerTimeoutMs: 50,
+      }),
+    ).toBeUndefined();
+  });
+
+  it("a fast provider still returns normally when a timeout is configured", async () => {
+    const out = await verifyIntegrity(
+      anyInput,
+      req({ [CONTENT_BINDING]: "yes" }),
+      [attestingProvider("ok", { [CONTENT_BINDING]: "yes" })],
+      { providerTimeoutMs: 1000 },
+    );
+    expect(out?.mechanism).toBe("ok");
+  });
+
+  it("a late-REJECTING timed-out provider does not raise an unhandled rejection", async () => {
+    let rejectLater: (e: unknown) => void = () => {};
+    const slowReject: IntegrityVerifier = {
+      mechanism: "slow-reject",
+      canAttempt: () => true,
+      verify: () =>
+        new Promise<IntegrityResult>((_resolve, reject) => {
+          rejectLater = reject;
+        }),
+    };
+    const p = verifyIntegrity(anyInput, req({ [CONTENT_BINDING]: "yes" }), [slowReject], {
+      providerTimeoutMs: 20,
+    });
+    expect(await p).toBeUndefined();
+    // reject AFTER the race was abandoned — must be swallowed, not crash the process.
+    rejectLater(new Error("late"));
+    await new Promise((r) => setTimeout(r, 10));
+  });
+
   it("a provider returning a malformed (non-attestation) object is treated as a non-result", async () => {
     const malformed: IntegrityVerifier = {
       mechanism: "bad",

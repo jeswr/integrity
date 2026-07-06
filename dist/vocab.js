@@ -18,6 +18,11 @@
 /**
  * Total order on verdicts for the fail-closed comparison in `satisfies`.
  * `no` (0) < `partial` (1) < `yes` (2). Any unrecognised value ranks as `no` (fail-closed).
+ *
+ * NOTE: ranking an unknown value as `no` is the correct fail-closed behaviour for an ACHIEVED
+ * verdict (a malformed proof helps satisfy nothing). It is NOT safe for a REQUIRED MINIMUM —
+ * a typo'd minimum (e.g. `"yees"`) would then rank `no` and make the demand vacuous. `satisfies`
+ * therefore guards the minimum with {@link isVerdict} and denies a malformed requirement.
  */
 export function rank(v) {
     switch (v) {
@@ -29,6 +34,10 @@ export function rank(v) {
             // `no`, `undefined`, or any unrecognised value — fail-closed.
             return 0;
     }
+}
+/** True iff `v` is one of the three recognised verdict strings. */
+export function isVerdict(v) {
+    return v === "yes" || v === "partial" || v === "no";
 }
 /** The @jeswr placeholder vocabulary namespace for integrity properties. */
 export const INTEGRITY_NS = "https://w3id.org/jeswr/integrity#";

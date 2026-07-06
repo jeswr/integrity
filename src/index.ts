@@ -49,7 +49,7 @@ export {
 } from "./profiles.js";
 
 // The two fail-closed decision functions.
-export { satisfies, verifyIntegrity } from "./satisfies.js";
+export { satisfies, type VerifyIntegrityOptions, verifyIntegrity } from "./satisfies.js";
 // Interfaces (the seam).
 export {
   type IntegrityAttestation,
@@ -73,6 +73,7 @@ export {
   CONTENT_BINDING,
   INTEGRITY_NS,
   type IntegrityPropertyIri,
+  isVerdict,
   OFFLINE_VERIFIABILITY,
   POST_QUANTUM_FORGERY,
   POST_QUANTUM_SNOOPING,

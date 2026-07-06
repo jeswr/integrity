@@ -84,4 +84,26 @@ describe("satisfies: fail-closed predicate", () => {
       satisfies(att({ [CONTENT_BINDING]: "partial" }), req({ [CONTENT_BINDING]: "partial" })),
     ).toBe(true);
   });
+
+  it("a MALFORMED minimum verdict DENIES (fail-closed), never becomes a vacuous demand", () => {
+    // roborev regression: a typo'd minimum ("yees") must not rank `no` and pass trivially.
+    const requirement: IntegrityRequirement = {
+      requires: new Map([[CONTENT_BINDING, "yees" as unknown as Verdict]]),
+    };
+    // even a strong achieved verdict cannot satisfy a malformed demand
+    expect(satisfies(att({ [CONTENT_BINDING]: "yes" }), requirement)).toBe(false);
+    expect(satisfies(att({}), requirement)).toBe(false);
+  });
+
+  it("a malformed minimum fails the whole requirement even alongside satisfiable demands", () => {
+    const requirement: IntegrityRequirement = {
+      requires: new Map<IntegrityPropertyIri, Verdict>([
+        [CONTENT_BINDING, "yes"],
+        [AUTHORSHIP_BINDING, "definitely" as unknown as Verdict],
+      ]),
+    };
+    expect(
+      satisfies(att({ [CONTENT_BINDING]: "yes", [AUTHORSHIP_BINDING]: "yes" }), requirement),
+    ).toBe(false);
+  });
 });

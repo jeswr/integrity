@@ -28,8 +28,15 @@ export type IntegrityPropertyIri = string;
 /**
  * Total order on verdicts for the fail-closed comparison in `satisfies`.
  * `no` (0) < `partial` (1) < `yes` (2). Any unrecognised value ranks as `no` (fail-closed).
+ *
+ * NOTE: ranking an unknown value as `no` is the correct fail-closed behaviour for an ACHIEVED
+ * verdict (a malformed proof helps satisfy nothing). It is NOT safe for a REQUIRED MINIMUM —
+ * a typo'd minimum (e.g. `"yees"`) would then rank `no` and make the demand vacuous. `satisfies`
+ * therefore guards the minimum with {@link isVerdict} and denies a malformed requirement.
  */
 export declare function rank(v: Verdict | undefined): 0 | 1 | 2;
+/** True iff `v` is one of the three recognised verdict strings. */
+export declare function isVerdict(v: unknown): v is Verdict;
 /** The @jeswr placeholder vocabulary namespace for integrity properties. */
 export declare const INTEGRITY_NS: "https://w3id.org/jeswr/integrity#";
 /**
